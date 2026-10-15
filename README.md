@@ -9,12 +9,28 @@ grow cobwebs, and a bookworm named **Wormy** starts coughing at you.
 
 No accounts, no servers, no tracking. Everything lives in `chrome.storage.local`.
 
-## Install (load unpacked)
+## Install (unpacked, for testing)
 
-1. Open `brave://extensions` (or `chrome://extensions`).
-2. Turn on **Developer mode** (top-right).
-3. Click **Load unpacked** and select this folder (the one containing `manifest.json`).
-4. Pin **Chelfe** to the toolbar.
+You can load Chelfe directly from this folder in any Chromium-based browser.
+
+1. Go to your browser's extensions page:
+   - **Brave**: `brave://extensions/`
+   - **Chrome**: `chrome://extensions/`
+   - **Microsoft Edge**: `edge://extensions/`
+   - **Opera/Vivaldi/Arc**: open Extensions from Settings
+2. Turn on **Developer mode** (top-right in Chrome/Brave/Edge).
+3. Click **Load unpacked** (or "Load unpacked extension").
+4. Select this folder (the one containing `manifest.json`).
+5. Pin **Chelfe** to the toolbar.
+
+To update after pulling changes, go back to the extensions page and hit **Reload** on Chelfe.
+
+## Install from a ZIP (share with a friend)
+
+1. Download `chelfe-v1.2.0.zip` from the Releases section of this repo.
+2. Unzip it somewhere (or just keep it).
+3. Follow the "Load unpacked" steps above, selecting the unzipped folder.
+4. Done — no build step required.
 
 ## Use
 
@@ -67,6 +83,19 @@ in the browser — there are no audio files and nothing is downloaded:
 | `notifications` | show reminder + dust nudges |
 
 No host permissions, no remote code, no libraries, no build step.
+
+## Development notes
+
+- MV3, vanilla JS/HTML/CSS only. No frameworks, build tools, external libraries, or remote code.
+- All data lives in `chrome.storage.local`. The service worker reads from storage on every event (no in-memory global state).
+- CSP is strict: no inline scripts or event handlers in HTML; no inline `style="..."` attributes (inline SVG markup is fine).
+- Animations are pure CSS. Motion respects `prefers-reduced-motion`.
+- Wormy's voice is synthesised with `speechSynthesis` (pitched up) and sound effects are generated with the Web Audio API. No audio files are shipped.
+- Small, readable files with short comments. Designed to be easy to hack on.
+
+## Repository
+
+This is a single-folder unpacked extension. There's no build process. Just clone the repo and "Load unpacked" the folder in your Chromium browser.
 
 ## Files
 

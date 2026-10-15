@@ -332,12 +332,18 @@ body {
   z-index: 21;
   left: 50%;
   top: 50%;
+  /* keep it centred: `pop` animates transform, so the resting value must be
+   * the centring translate too, or the card snaps to the bottom-right */
+  transform: translate(-50%, -50%);
   width: min(340px, calc(100vw - 40px));
   padding: 18px;
   border: 2px solid #e6d6bd;
   border-radius: 14px;
   background: #fbf3e4;
   box-shadow: 0 26px 60px -20px rgba(50, 30, 10, .65);
+  /* never let a long title push the action buttons off the box */
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
   animation: pop .18s ease;
 }
 
