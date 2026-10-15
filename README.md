@@ -18,11 +18,12 @@ No accounts, no servers, no tracking. Everything lives in `chrome.storage.local`
 
 ## Use
 
-- **Toolbar icon** — pick how long the page will take (5 min / 20 min / 1 h) and
-  an optional reminder, then **Put on the shelf**.
+- **Toolbar icon** — opens **the box**: your whole shelf in a compact popup,
+  like a normal extension. Hit **Save this page** at the top to add the current
+  tab (pick 5 min / 20 min / 1 h and an optional reminder), then **Put on the shelf**.
 - **Alt+Shift+S** — quick-save the current tab (20 min, no reminder).
-- **Open my shelf** — the shelf page, where items stand on planks.
-- Click an item for **Open / Done / Remove**. **Done** leaves a puff of dust.
+- Click an item **in the box** for **Open / Done / Remove**. **Done** leaves a puff
+  of dust. The **⤢** button opens the same shelf as a full page in a tab.
 - Click **Wormy** and tell him how much time you have; he points at the dustiest
   thing that fits.
 
@@ -54,7 +55,7 @@ background.js        service worker: alarms, notifications, badge, shortcut
 lib/storage.js       all persistence (shared by popup + worker)
 lib/dust.js          dust/overdue maths (shared)
 lib/wormy.js         Wormy's SVG, moods and lines
-popup/               the save popup
-shelf/               the shelf page
-icons/               toolbar icons
+popup/               the click-box: a compact shelf + "save this page" bar
+shelf/               the same shelf as a full page (the ⤢ fallback)
+icons/               toolbar icons (the dusty file)
 ```
