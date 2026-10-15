@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Chelfe</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="head">
+    <img id="favicon" class="favicon" alt="" />
+    <div class="meta">
+      <h1 id="title" class="title">Loading…</h1>
+      <p id="host" class="host"></p>
+    </div>
+  </header>
+
+  <p id="warn" class="warn" hidden></p>
+
+  <section class="block">
+    <div class="label">How long will it take?</div>
+    <div id="minutes" class="chips">
+      <button type="button" class="chip" data-min="5">5 min</button>
+      <button type="button" class="chip is-on" data-min="20">20 min</button>
+      <button type="button" class="chip" data-min="60">1h+</button>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="label">Remind me:</div>
+    <div id="remind" class="chips">
+      <button type="button" class="chip" data-remind="tomorrow">Tomorrow</button>
+      <button type="button" class="chip" data-remind="weekend">Weekend</button>
+      <button type="button" class="chip" data-remind="twoweeks">In 2 weeks</button>
+      <button type="button" class="chip" data-remind="date">Pick date</button>
+      <button type="button" class="chip is-on" data-remind="none">None</button>
+    </div>
+    <input id="date" class="date" type="date" hidden />
+  </section>
+
+  <button id="save" type="button" class="save">Put on the shelf</button>
+  <p id="toast" class="toast" hidden>Put on the shelf! 🪱</p>
+
+  <footer class="foot">
+    <button id="shelf" type="button" class="link">Open my shelf →</button>
+    <span class="hint">Alt+Shift+S saves with 20 min</span>
+  </footer>
+
+  <script src="../lib/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
