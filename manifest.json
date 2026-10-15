@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Chelfe",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A literal wooden shelf for the things you meant to read and watch later.",
   "permissions": ["storage", "tabs", "alarms", "notifications"],
   "background": {

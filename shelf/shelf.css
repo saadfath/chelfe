@@ -452,9 +452,22 @@ body {
   height: 100%;
   animation: wormyBob 3.2s ease-in-out infinite;
 }
+/* idle: a gentle bob with a little sway, so he never looks frozen */
 @keyframes wormyBob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30%      { transform: translateY(-3px) rotate(-1.2deg); }
+  70%      { transform: translateY(-2px) rotate(1.2deg); }
+}
+
+/* idle blink: a quick squash of the open eyes every few seconds */
+.wormy-svg .w-eyes-open {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wormyBlink 6.4s linear infinite;
+}
+@keyframes wormyBlink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93%, 96%      { transform: scaleY(.14); }
 }
 
 /* mood: coughing -> shake + puff; cheering -> jump */
@@ -498,6 +511,24 @@ body {
 .wormy[data-mood="masked"] .w-mouth { display: none; }
 .wormy[data-mood="cheering"] .w-arms-up { display: inline; }
 .wormy[data-mood="cheering"] .w-book { display: none; }
+
+/* talking: mouth flaps and a small head bob while he speaks (any mood) */
+.wormy.is-talking .w-mouth { display: none; }
+.wormy.is-talking .w-mouth-open { display: inline; }
+.wormy.is-talking .w-mouth-open {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wormyTalk .16s steps(2, end) infinite alternate;
+}
+@keyframes wormyTalk {
+  from { transform: scaleY(.45) scaleX(.9); }
+  to   { transform: scaleY(1.15) scaleX(1.05); }
+}
+.wormy.is-talking .wormy-svg { animation: wormyTalkBob .42s ease-in-out infinite; }
+@keyframes wormyTalkBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-3px) rotate(1.4deg); }
+}
 
 /* speech bubble */
 .bubble {
@@ -591,5 +622,37 @@ body {
 @media (max-width: 560px) {
   .wormy { left: 10px; bottom: 10px; }
   .wormy-figure { width: 84px; height: 94px; }
+}
+
+/* ---- sound toggle (shared by the shelf page and the popup) ----------- */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sound {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1.5px solid #d9c6a6;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--wood-lo);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.sound:hover { background: #f3e7d2; }
+.sound .snd-off { display: none; }
+.sound.is-muted .snd-on { display: none; }
+.sound.is-muted .snd-off { display: inline; }
+.sound.is-muted { color: #b0392c; border-color: #e4b7ad; background: #fdeeeb; }
+
+@media (prefers-reduced-motion: reduce) {
+  .w-eyes-open, .w-mouth-open { animation: none !important; }
 }
 

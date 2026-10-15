@@ -26,6 +26,10 @@ No accounts, no servers, no tracking. Everything lives in `chrome.storage.local`
   of dust. The **⤢** button opens the same shelf as a full page in a tab.
 - Click **Wormy** and tell him how much time you have; he points at the dustiest
   thing that fits.
+- **Wormy has a voice.** Tap him (or tap his speech bubble) and he reads the line
+  out loud, in a small squeaky voice, with his mouth moving while he talks.
+- Tap the **speaker** in the header (or on the shelf page) to **hush him**. The
+  switch is remembered, and both pages stay in sync.
 
 ## What it does over time
 
@@ -35,6 +39,23 @@ No accounts, no servers, no tracking. Everything lives in `chrome.storage.local`
 - Reminders land at **9:00** local on the chosen day, with a desktop notification.
 - A daily nudge at **10:00** mentions your dustiest item.
 - The toolbar badge counts overdue items.
+
+## Wormy's voice and sounds
+
+Wormy can talk, and he has a few little sound effects. All of it is synthesised
+in the browser — there are no audio files and nothing is downloaded:
+
+- **Speaking** uses the built-in `speechSynthesis` API, pitched up a little so he
+  sounds squeaky.
+- **Sound effects** (`blip`, `plonk`, `poof`, `cheer`) are generated with the Web
+  Audio API: oscillators and a burst of filtered noise.
+- He speaks on your interaction (tapping him, tapping the bubble, marking
+  something **Done**), never on his own, so nothing ever talks over you.
+- The **speaker** button mutes everything, and the choice is stored in
+  `chrome.storage.local` under `chelfe_settings`, shared by both pages.
+- Motion keeps him alive: he idles with a bob and a sway, blinks every few
+  seconds, and flaps his mouth while he speaks. All of it stops when your system
+  asks for reduced motion.
 
 ## Permissions
 
@@ -55,6 +76,7 @@ background.js        service worker: alarms, notifications, badge, shortcut
 lib/storage.js       all persistence (shared by popup + worker)
 lib/dust.js          dust/overdue maths (shared)
 lib/wormy.js         Wormy's SVG, moods and lines
+lib/sound.js         Wormy's voice, sound effects + the mute switch (shared)
 popup/               the click-box: a compact shelf + "save this page" bar
 shelf/               the same shelf as a full page (the ⤢ fallback)
 icons/               toolbar icons (the dusty file)

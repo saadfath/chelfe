@@ -53,8 +53,27 @@ body.chelfe-popup {
 }
 .expand:hover { background: rgba(255, 255, 255, .22); }
 
+/* the sound toggle sits in the dark header, so it needs the wood tones */
+.box-head .sound {
+  border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .10);
+  color: #f6ead6;
+}
+.box-head .sound:hover { background: rgba(255, 255, 255, .22); }
+.box-head .sound.is-muted {
+  color: #ffd9d2;
+  border-color: rgba(255, 130, 110, .45);
+  background: rgba(150, 40, 28, .40);
+}
+
 /* ---- save bar -------------------------------------------------------- */
-.save { background: #fbf3e4; border-bottom: 1px solid #e6d6bd; }
+/* the panel drops over the shelf instead of squashing it */
+.save {
+  position: relative;
+  z-index: 3;
+  background: #fbf3e4;
+  border-bottom: 1px solid #e6d6bd;
+}
 
 .save-toggle {
   width: 100%;
@@ -90,7 +109,17 @@ body.chelfe-popup {
 }
 .save-toggle.is-open .plus { transform: rotate(45deg); }
 
-.save-panel { padding: 0 12px 12px; }
+.save-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 12px;
+  background: #fbf3e4;
+  border-bottom: 1px solid #e6d6bd;
+  box-shadow: 0 14px 22px -12px rgba(60, 35, 12, .55);
+}
 
 .save-page {
   margin: 0 0 9px;
@@ -159,16 +188,23 @@ body.chelfe-popup {
 .toast.is-error { color: #9a4a37; }
 
 /* ---- the shelf region ------------------------------------------------ */
+/* Planks sit on the floor of the box. `margin-top: auto` on the first plank
+ * fills the empty space above them, and collapses to 0 once the shelf is
+ * full, so it still scrolls from the top down. */
 .box-shelf {
   flex: 1 1 auto;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 12px 12px 18px;
   --board-h: 13px;
   --plank-min: 0px;
 }
+.box-shelf > .plank:first-child { margin-top: auto; }
 .box-shelf .plank { margin-bottom: 26px; }
+.box-shelf .plank:last-child { margin-bottom: 12px; }
 .box-shelf .plank .row { gap: 8px; padding: 0 6px var(--board-h); min-height: 0; }
 .box-shelf .item-article .label { font-size: 11px; }
 .box-shelf .item-course .label { font-size: 12px; }
@@ -227,5 +263,6 @@ body.chelfe-popup {
 .card { width: min(330px, calc(100vw - 28px)); padding: 16px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .wormy-svg, .wormy-figure, .item, .spider { animation: none !important; transition: none !important; }
+  .wormy-svg, .wormy-figure, .item, .spider,
+  .w-eyes-open, .w-mouth-open { animation: none !important; transition: none !important; }
 }

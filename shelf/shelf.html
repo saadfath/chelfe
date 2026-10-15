@@ -9,7 +9,22 @@
 <body>
   <header class="topbar">
     <h1>🪱 Chelfe</h1>
-    <span id="count" class="count"></span>
+    <div class="topbar-right">
+      <span id="count" class="count"></span>
+      <button id="sound" class="sound" type="button"
+              title="Wormy's voice" aria-label="Wormy's voice" aria-pressed="true">
+        <svg class="snd-on" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+          <path d="M4 9h3l4-3v12l-4-3H4z" fill="currentColor"/>
+          <path d="M14.5 9a4 4 0 0 1 0 6M17.2 6.6a7.5 7.5 0 0 1 0 10.8" fill="none"
+                stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        <svg class="snd-off" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+          <path d="M4 9h3l4-3v12l-4-3H4z" fill="currentColor"/>
+          <path d="M14 9.5l5 5M19 9.5l-5 5" fill="none"
+                stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
   </header>
 
   <!-- planks are injected here by shelf.js -->
@@ -77,6 +92,7 @@
   <script src="../lib/storage.js"></script>
   <script src="../lib/dust.js"></script>
   <script src="../lib/wormy.js"></script>
+  <script src="../lib/sound.js"></script>
   <script src="shelf.js"></script>
 
 </body>

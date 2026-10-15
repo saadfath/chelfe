@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
   wireCard();
+  wireWormySound();
   mountWormy();
   await render();
   window.addEventListener("resize", debounce(render, 150));
@@ -304,6 +305,7 @@ async function doneItem() {
 
   // item tumbles off the shelf, with a puff of dust, then is removed
   if (el) {
+    wormySfx("poof");
     dustPuff(el, dustLevel(it));
     el.classList.add("is-falling");
     await wait(620);
@@ -320,6 +322,7 @@ async function removeItemAnim() {
   hideCard();
 
   if (el) {
+    wormySfx("blip");
     el.classList.add("is-gone");
     await wait(220);
   }
@@ -376,6 +379,12 @@ function mountWormy() {
   for (let i = 0; i < 12; i++) conf.appendChild(document.createElement("i"));
 
   fig.addEventListener("click", askWormy);
+
+  // tapping the bubble repeats the line out loud (but not its buttons)
+  document.getElementById("wormyBubble").addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
+    repeatBubble();
+  });
 }
 
 /* Recompute Wormy's mood from the shelf (unless he's mid-celebration). */
@@ -403,20 +412,26 @@ function askWormy() {
   for (const m of [5, 20, 60]) {
     row.appendChild(bubbleButton(m === 60 ? "1h+" : m + " min", () => answerWormy(m)));
   }
-  setBubble([el("p", "How much time do you have?"), row]);
+  const line = "How much time do you have?";
+  setBubble([el("p", line), row]);
+  sayAsWormy(line);
 }
 
 function answerWormy(minutes) {
   bubbleState = "answer";
 
   if (!items.length) {
-    setBubble([el("p", "Shelf's empty. Save something first, yallah.")]);
+    const line = "Shelf's empty. Save something first, yallah.";
+    setBubble([el("p", line)]);
+    sayAsWormy(line);
     return;
   }
 
   const pick = recommendWormyItem(items, minutes);
   if (!pick) {
-    setBubble([el("p", "Nothing that small fits, khoya. Everything here is a bigger bite.")]);
+    const line = "Nothing that small fits, khoya. Everything here is a bigger bite.";
+    setBubble([el("p", line)]);
+    sayAsWormy(line);
     return;
   }
 
@@ -425,14 +440,21 @@ function answerWormy(minutes) {
   row.className = "bubble-actions";
   row.appendChild(bubbleButton("Open it", () => chrome.tabs.create({ url: pick.url })));
   row.appendChild(bubbleButton("Another time", askWormy));
-  setBubble([el("p", `${when}? Try “${pick.title}”.`), row]);
+  const line = `${when}? Try “${pick.title}”.`;
+  setBubble([el("p", line), row]);
+  sayAsWormy(line);
 }
 
 function cheerWormy() {
   bubbleState = "message";
   wormyMood = "cheering";
   document.getElementById("wormy").dataset.mood = "cheering";
-  showMoodMessage();
+
+  // one line, used by both the bubble and the voice
+  const line = pickWormyMessage("cheering", wormyFocusItem(items));
+  setBubble([el("p", line)]);
+  sayAsWormy(line);
+  wormySfx("cheer");
 
   const conf = document.getElementById("wormyConfetti");
   conf.classList.add("is-on");
